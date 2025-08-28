@@ -14,21 +14,55 @@
     <main>
       <router-view/>
     </main>
+        
+    <!-- 1. 将 Toast 组件放在这里，并给它一个 ref -->
+    <Toast ref="toastRef" :message="toastMessage" :type="toastType" />
   </div>
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
+import { ref, watch,onMounted, onUnmounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
+
+import Toast from './components/Toast.vue';
+import emitter from './emitter';
 
 const router = useRouter();
 const route = useRoute();
 const user = ref(JSON.parse(localStorage.getItem('user')));
 
+// --- ↓↓↓ Toast 相关逻辑 ↓↓↓ ---
+const toastRef = ref(null);
+const toastMessage = ref('');
+const toastType = ref('info');
+
+// 定义一个函数，用来触发 Toast
+const showToast = (payload) => {
+  toastMessage.value = payload.message;
+  toastType.value = payload.type || 'info';
+  toastRef.value.show();
+};
+
+// 3. 在组件挂载时，监听全局的 'show-toast' 事件
+onMounted(() => {
+  emitter.on('show-toast', showToast);
+});
+
+// 4. 在组件卸载时，移除监听，防止内存泄漏
+onUnmounted(() => {
+  emitter.off('show-toast', showToast);
+});
+// --- ↑↑↑ Toast 相关逻辑结束 ↑↑↑ ---
+
+
 const logout = () => {
     localStorage.removeItem('user');
     localStorage.removeItem('token');
     user.value = null;
+
+    // 使用新的 Toast 提示
+    emitter.emit('show-toast', { message: '您已成功退出登录' });
+
     router.push('/login');
 };
 

@@ -15,7 +15,11 @@
 
     <div class="post-box">
       <textarea v-model="newMessage" placeholder="分享你的想法..."></textarea>
-      <button @click="postMessage">发布</button>
+      <!-- 修改发布按钮 -->
+      <button @click="postMessage" :disabled="isPosting">
+        <span v-if="!isPosting">发布</span>
+        <Loader v-else class="spinner" />
+      </button>
     </div>
 
     <div class="message-list">
@@ -35,6 +39,8 @@
 // 新增：引入 computed
 import { ref, onMounted, computed } from 'vue';
 import api from '@/services/api';
+import emitter from '@/emitter'; //  引入 emitter
+import { Loader } from 'lucide-vue-next'; //  引入图标
 import MessageItem from '@/components/MessageItem.vue';
 // 新增：引入我们刚刚创建的弹幕组件
 import DanmakuDisplay from '@/components/DanmakuDisplay.vue';
@@ -47,6 +53,9 @@ const switchScalePercent = ref(80); // 默认大小为 80%(弹幕)
 
 // 新增：一个控制弹幕是否显示的状态，默认为 true (显示)
 const showDanmaku = ref(true);
+
+// 新增 isPosting 状态
+const isPosting = ref(false);
 
 // 新增：使用 computed 计算属性来筛选出符合弹幕条件的留言
 // 这样做的好处是，当 messages 列表变化时，danmakuMessages 会自动更新
@@ -72,13 +81,16 @@ const fetchMessages = async () => {
 // 发布新留言 (此函数不变)
 const postMessage = async () => {
   if (!newMessage.value.trim()) return;
+  isPosting.value = true; // 开始发布
   try {
     const response = await api.postMessage(newMessage.value);
     messages.value.unshift(response.data);
     newMessage.value = '';
+    emitter.emit('show-toast', { message: '发布成功！', type: 'success' });
   } catch (error) {
-    console.error("发布失败:", error);
-    alert('发布失败！');
+    emitter.emit('show-toast', { message: '发布失败！', type: 'error' });
+  }finally {
+    isPosting.value = false; // 结束发布
   }
 };
 
@@ -242,5 +254,14 @@ input:checked + .slider:after {
 
 .message-list {
   clear: both;
+}
+
+/* 新增 spinner 动画 */
+.spinner {
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 </style>
