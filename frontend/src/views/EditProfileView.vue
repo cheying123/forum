@@ -9,7 +9,7 @@
     <form v-else @submit.prevent="updateProfile">
       <div class="form-group avatar-group">
         <label>头像</label>
-        <img :src="serverBaseUrl + profile.avatarUrl" v-if="profile.avatarUrl" class="avatar-preview">
+        <img :src="profile.avatarUrl" v-if="profile.avatarUrl" class="avatar-preview">
         <div v-else class="avatar-preview-placeholder">?</div>
         
         <!-- 2. 修改文件选择逻辑 -->
@@ -57,7 +57,7 @@ const profile = ref({ username: '', signature: '', contact: '', avatarUrl: '' })
 const loading = ref(true);
 const isSaving = ref(false);
 const isUploading = ref(false);       //  我们仍然需要这个状态来显示上传中的加载动画
-const serverBaseUrl = 'http://localhost:3000';
+// const serverBaseUrl = 'http://localhost:3000';
 
 // 4. 新增对组件的引用
 const cropperModalRef = ref(null);

@@ -8,7 +8,8 @@ module.exports = defineConfig({
         changeOrigin: true,
         // 可选：如果您的后端路由本身不带/api，可以重写路径
         // pathRewrite: { '^/api': '' } 
-      }
+      },
+       '/uploads': { target: 'http://localhost:3000', changeOrigin: true } 
     }
   }
 })

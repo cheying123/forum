@@ -5,7 +5,7 @@
   </div>
   <div v-else-if="user" class="profile-container">
     <div class="profile-header">
-      <img :src="serverBaseUrl + user.avatarUrl" v-if="user.avatarUrl" alt="Avatar" class="profile-avatar">
+      <img :src="user.avatarUrl" v-if="user.avatarUrl" alt="Avatar" class="profile-avatar">
       <div v-else class="profile-avatar-placeholder">?</div>
       <h1 class="profile-username">{{ user.username }}</h1>
     </div>
@@ -36,7 +36,7 @@ import { Loader } from 'lucide-vue-next';
 const user = ref(null);
 const loading = ref(true);
 const route = useRoute();
-const serverBaseUrl = 'http://localhost:3000'; // 后端服务器地址
+// const serverBaseUrl = 'http://localhost:3000'; // 后端服务器地址
 
 const fetchUser = async (username) => {
   loading.value = true;
