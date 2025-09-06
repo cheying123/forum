@@ -1,0 +1,8 @@
+# Dependencies
+/node_modules
+
+# Database
+/forum.db
+
+# Log files
+*.log
