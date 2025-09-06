@@ -7,7 +7,10 @@
       @confirm="executeDelete"
     />
     <div class="message-header">
-      <strong>{{ message.username }}</strong>
+    <!-- 用 router-link 包裹用户名 -->
+      <router-link :to="{ name: 'UserProfile', params: { username: message.username } }">
+        <strong>{{ message.username }}</strong>
+      </router-link>
       <span class="timestamp">{{ new Date(message.createdAt).toLocaleString() }}</span>
     </div>
     <div class="message-content">

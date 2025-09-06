@@ -25,5 +25,23 @@ export default {
     getMessages() { return apiClient.get('/messages'); },
     postMessage(content) { return apiClient.post('/messages', { content }); },
     updateMessage(id, content) { return apiClient.put(`/messages/${id}`, { content }); },
-    deleteMessage(id) { return apiClient.delete(`/messages/${id}`); }
+    deleteMessage(id) { return apiClient.delete(`/messages/${id}`); },
+
+     // --- ↓↓↓ 新增用户相关方法 ↓↓↓ ---
+    getUser(username) {
+        return apiClient.get(`/users/${username}`);
+    },
+    getProfile() {
+        return apiClient.get('/profile');
+    },
+    updateProfile(profileData) {
+        return apiClient.put('/profile', profileData);
+    },
+    uploadAvatar(formData) {
+        return apiClient.post('/profile/avatar', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data' // 上传文件必须的头
+            }
+        });
+    },
 };

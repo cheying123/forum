@@ -13,6 +13,7 @@
     "lucide-vue-next": "^0.542.0",
     "mitt": "^3.0.1",
     "vue": "^3.2.13",
+    "vue-advanced-cropper": "^2.8.9",
     "vue-router": "^4.0.3"
   },
   "devDependencies": {

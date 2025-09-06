@@ -2,8 +2,17 @@
   <div id="app-container">
     <nav class="main-nav">
       <router-link to="/">论坛首页</router-link>
+      <!-- frontend/src/App.vue -->
       <div v-if="user" class="user-info">
-        <span>欢迎, <strong>{{ user.username }}</strong> {{ user.isAdmin ? '(管理员)' : '' }}</span>
+        <span>欢迎,
+          <!-- 用户名也变成可点击的链接 -->
+          <router-link :to="{ name: 'UserProfile', params: { username: user.username } }">
+            <strong>{{ user.username }}</strong>
+          </router-link>
+          {{ user.isAdmin ? '(管理员)' : '' }}
+        </span>
+        <!-- 新增编辑资料链接 -->
+        <router-link :to="{ name: 'EditProfile' }">编辑资料</router-link>
         <a @click="logout" href="#">退出登录</a>
       </div>
       <div v-else>

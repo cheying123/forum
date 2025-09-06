@@ -11,7 +11,10 @@ db.exec(`
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         username TEXT UNIQUE NOT NULL,
         password TEXT NOT NULL,
-        isAdmin INTEGER DEFAULT 0
+        isAdmin INTEGER DEFAULT 0,
+        signature TEXT DEFAULT '',      -- 个性签名
+        contact TEXT DEFAULT '',       -- 联系方式 (如邮箱)
+        avatarUrl TEXT DEFAULT ''       -- 头像图片的 URL
     )
 `);
 
