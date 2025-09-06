@@ -205,6 +205,7 @@ app.get('/api/users/:username', (req, res) => {
             res.status(404).json({ message: '用户不存在' });
         }
     } catch (error) {
+        console.error(`获取用户 ${req.params.username} 失败:`, error);
         res.status(500).json({ message: '获取用户信息失败' });
     }
 });
@@ -217,6 +218,7 @@ app.get('/api/profile', authenticateToken, (req, res) => {
         const user = stmt.get(userId);
         res.json(user);
     } catch (error) {
+        console.error(`获取用户 ${req.params.username} 失败:`, error);
         res.status(500).json({ message: '获取个人资料失败' });
     }
 });
