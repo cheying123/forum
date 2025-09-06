@@ -2,7 +2,8 @@
 import axios from 'axios';
 
 const apiClient = axios.create({
-    baseURL: 'http://localhost:3000/api', // 我们后端的地址
+    //baseURL: 'http://localhost:3000/api', // 我们后端的地址
+    baseURL: '/api', // 修改成这一行！
     headers: {
         'Content-Type': 'application/json'
     }
