@@ -1,0 +1,24 @@
+# 依赖包文件夹
+**/node_modules
+
+# 构建输出目录
+**/dist
+
+# 日志文件
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 数据库文件
+# 忽略所有.db文件
+*.db
+# 如果只想忽略这一个，可以写 backend/forum.db
+# backend/forum.db
+
+# 操作系统生成的文件
+.DS_Store
+Thumbs.db
+
+# 环境变量文件 (非常重要，用于存放敏感信息)
+.env
+.env*.local
